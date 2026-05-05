@@ -241,12 +241,11 @@ cross/.default={1pt}}
 
 
 
-\begin{exampleblock}{A two dimensional grid of priors}
-  Let $\Lambda = \{1,\ldots,314\}$ and choose a regularization parameter $d_{\min} >0$. For each $\lambda \in \Lambda$ we choose $k_1$ distinct neural net weights $\{ \B_{\lambda,j} \}_{j=1}^{k_1}$ within a conical half-angle of $0.01\lambda$ around the initial neural weight $\B$. 
-\newline \\ 
-For each $\lambda$, we construct a grid $\mathcal{B}_\lambda$, (call it  the ``beta-grid"), containing at most $K_1$ points in a fixed compact interval in $\R$. ({\it Neither the grid points nor the interval depend on $\lambda$ but they do depend on the parameters $B,d,h,\gamma,m,\delta$ and $d_{\min}$}). 
-  \newline \\ 
-  For each $\lambda \in \Lambda$ and $\tilde{\sigma} \in \mathcal{B}_\lambda$ we consider the following mixture of Gaussians $\frac{1}{k_1}\sum_{j=1}^{k_1}  {\cal N}_{(\B_{\lambda,j},\tilde{\sigma}^2 I)}$.  Thus we have a grid of priors of total size $K := 314K_1$.
+\begin{exampleblock}{Projected Subgradient Descent}
+The projection operator is defined by
+\begin{equation*}
+  \Pi_{\mathcal{X}}(x) = \mathop{\arg \min}\limits_{y \in \mathcal{X}}\norm{x - y}
+\end{equation*}
 \end{exampleblock}
 
 
@@ -261,7 +260,7 @@ For each $\lambda$, we construct a grid $\mathcal{B}_\lambda$, (call it  the ``b
           \node [tokens=1] (noeud2) at (1.5,-1) [label=below right:{$y_{s}$}] {};
           \node [tokens=1] (noeud3) at (2.5,2) [label=below right:{$y_{s+1}$}] {};
           \node [tokens=1] (noeud4) at (2.8,3) [label=above left:{$x_{s+1}$}] {};
-          \draw[->, thick] (noeud1) -- (noeud3) node[midway, left] {$-\frac{1}{\beta}\nabla f(x_s)$};
+          \draw[->, thick] (noeud1) -- (noeud3) node[midway, left, xshift=-0.3cm] {$-\frac{1}{\beta}\nabla f(x_s)$};
           \draw[thick, dashed] (noeud2) -- (noeud4) {};
           \node [tokens=1] (noeud5) at (4.5,3.3) [label=below right:{$y_{s+2}$}] {};
           \node [tokens=1] (noeud6) at (5.3,3.8) [label=right:{$x_{s+2}$}] {};
@@ -272,11 +271,15 @@ For each $\lambda$, we construct a grid $\mathcal{B}_\lambda$, (call it  the ``b
       \caption{Illustration of Nesterov's accelerated gradient descent.}
       \label{fig:nesterovacc}
     \end{figure}
+    First we introduce the following sequences:
+    \begin{equation*}
+      \lambda_0 = 0, \ \lambda_t = \frac{1 + \sqrt{1 + 4\lambda_{t-1}^2}}{2}, \ \text{and} \ \gamma_t = \frac{1 - \lambda_t}{\lambda_{t + 1}}
+    \end{equation*}
     Nesterov's accelerated gradient descent is described as follows. Start at an arbitrary initial point $x_1=y_1$ and then iterate 
     the following equations for $t\geq1$
     \begin{align*}
     y_{t+1} &= x_t - \frac{1}{\beta}\nabla f(x_t) \\
-    x_{t+1} &= (1 + \frac{\sqrt{\kappa} - 1}{\sqrt{\kappa} + 1})y_{t+1} - \frac{\sqrt{\kappa} - 1}{\sqrt{\kappa} + 1} y_t
+    x_{t+1} &= (1 - \gamma_t)y_{t+1} - \gamma_t y_t
     \end{align*}
     \begin{theorem}[{\bf Bound on Nesterov's accelerated gradient descent speed}]
     Let $f$ be a convex and $\beta$-smooth function, then Nesterov's accelerated gradient descent satisfies
@@ -288,13 +291,7 @@ For each $\lambda$, we construct a grid $\mathcal{B}_\lambda$, (call it  the ``b
 \end{exampleblock}
 
 \begin{exampleblock}{Some salient points about the (main) Theorem ($2$)}
-\vspace{12mm} 
-\begin{enumerate}
-\item The distribution $\tilde{\mu}_{\A}$ is explicitly constructed such that when the noisy weights above $\A +\tilde{\u}$ are sampled from this distribution, it is ensured that $\max_{\x \in S} \norm{ f_{\A + \tilde{\u}} (\x) - f_{\A} (\x)}_\infty < \frac{\gamma}{4}$.
-Also note that as defined above, $\lambda^*$ is the closest angle in the set  $\{0.01,0.02,\ldots,3.14\}$ to the angle between the initial net's weight vector $\B$ and the trained net's weight vector $\A$
-\vspace{12mm} 
-\item In our experiments the nets $\{ \A_i\}_{i=1,\ldots,k_1}$ were obtained by training the nets $\{ f_{\B_{\lambda^*,j}} \}_{j=1,\ldots,k_1}$ on $S$ by the same algorithm by which we obtained $f_{\A}$ from $f_{\B}$. A direction to explore further is if (maybe data-dependent) compression techniques can be used to obtain particularly good clusters of $\{B_{\lambda^*,j}\}$ from $\B$ and $\{\A_i\}$ from $\A$.
-\end{enumerate}
+
 \end{exampleblock}
 
 
