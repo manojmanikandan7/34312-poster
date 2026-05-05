@@ -12,13 +12,18 @@
 % \usepackage[ruled, vlined]{algorithm2e}
 \usetheme{smls09}
 % \usefonttheme{default}
-% \usefonttheme[onlymath]{serif}
+\usefonttheme[onlymath]{serif}
 
 % references backend=biber, style=alphabetic, citestyle=authoryear, ,hyperref=auto
 \usepackage[backend=biber,bibstyle=authoryear,citestyle=authoryear-comp]{biblatex}
 \bibliography{./bibliography}
 
 % private packages
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri,mindmap,shapes.geometric, shapes.misc}
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt.
+cross/.default={1pt}}
 \usepackage{color}
 \usepackage{hyperref}       % hyperlinks
 \usepackage{url}            % simple URL typesetting
@@ -245,24 +250,39 @@ For each $\lambda$, we construct a grid $\mathcal{B}_\lambda$, (call it  the ``b
 
 
 
-\begin{exampleblock}{A new PAC-Bayesian risk bound on nets}
-    \begin{theorem}[{\bf 2}]
-    Suppose we train using a dataset $S$ to obtain the trained net $f_{\A}$ from an initial neural net $f_{\B}$. Let $\theta = \arccos\frac{\langle \A, \B \rangle}{\norm{\A}, \norm{\B}}$. Let $\lambda^* = \argmin_{\lambda \in \Lambda}|0.01\lambda - \theta|$.  
-    \newline \\ 
-    Let the neural weights $\{ \A_i\}_{i=1,\ldots,k_1}$ be obtained by training the nets $\{ f_{\B_{\lambda^*,j}} \}_{j=1,\ldots,k_1}$ on $S$ and suppose $S$ is $(\epsilon,\gamma)-$nice w.r.t $\{ \A, \A_{i=1,\ldots,k_1} \}$
-    \newline \\ 
-    Now for each such $i$ define $d_{i, _*} = \min_{j=1,\ldots,k_1} \norm{\A_i - \B_{\lambda^*,j}}^2$ and $\tilde{\beta}_i = \argmin_{x \in \mathcal{B}_{\lambda^*}} | x - \beta(\A_i)|$ Then it follows that for all $\epsilon >0$ and $\delta \in (0,\frac{1}{K})$, 
-    %\vspace{-2mm}  
-    %{\small
-    \begin{align}
-    \nonumber &\mathbb{P}_{S} \Bigg [ \exists\, 
-    \tilde{\mu}_{\A} \text{ s.t. }, \forall i \text{ s.t. } d_{i,_*} \geq d_{\min},  \mathbb{E}_{\A + \tilde{\u} \sim \tilde{\mu}_{\A}} [ L_{0} (f_{\A + \tilde{\u}}) ] \leq \hat{L}_{\frac \gamma 2} \left (f_{\A} \right ) +\\
-    &\nonumber \sqrt{\frac 1 {m-1}}\sqrt{{-\log\Big(  \frac{1}{k_1} \sum\nolimits_{j=1}\nolimits^{k_1}    \exp(- {\frac 1 {2\tilde{\sigma}_i^2}}\|\A_i - \B_{\lambda^*,j}\|^2) \Big) + \log \frac{3m}{\delta}}} \\
-    &  \Bigg]\geq 1 - K\delta \label{eq:ours}
-    \end{align}
-    %}
 
-    where $\tilde{\sigma}_i^2 := \frac{1}{2h \log \left ( \frac{2dh}{\delta} \right )}  \left (  \min \left \{  \frac{ \tilde{\beta}_i }{de^{\frac {1}{d-1}}} , \frac{\frac \gamma 8}{e^2dB \tilde{\beta}_i ^{d-1}}  \right \}  \right )^2$ 
+\begin{exampleblock}{Nesterov's accelerated gradient descent}
+
+    \begin{figure}
+      \begin{center}
+        \begin{tikzpicture}[scale=2.5]
+          \node [tokens=1] (noeud1) at (0.5,1) [label=below right:{$x_s$}] {};
+          \node [tokens=1] (noeud2) at (1.5,-1) [label=below right:{$y_{s}$}] {};
+          \node [tokens=1] (noeud3) at (2.5,2) [label=below right:{$y_{s+1}$}] {};
+          \node [tokens=1] (noeud4) at (2.8,3) [label=above left:{$x_{s+1}$}] {};
+          \draw[->, thick] (noeud1) -- (noeud3) node[midway, left] {$-\frac{1}{\beta}\nabla f(x_s)$};
+          \draw[thick, dashed] (noeud2) -- (noeud4) {};
+          \node [tokens=1] (noeud5) at (4.5,3.3) [label=below right:{$y_{s+2}$}] {};
+          \node [tokens=1] (noeud6) at (5.3,3.8) [label=right:{$x_{s+2}$}] {};
+          \draw[->, thick] (noeud4) -- (noeud5) {};
+          \draw[thick, dashed] (noeud3) -- (noeud6) {};
+        \end{tikzpicture}
+        \end{center} 
+      \caption{Illustration of Nesterov's accelerated gradient descent.}
+      \label{fig:nesterovacc}
+    \end{figure}
+    Nesterov's accelerated gradient descent is described as follows. Start at an arbitrary initial point $x_1=y_1$ and then iterate 
+    the following equations for $t\geq1$
+    \begin{align*}
+    y_{t+1} &= x_t - \frac{1}{\beta}\nabla f(x_t) \\
+    x_{t+1} &= (1 + \frac{\sqrt{\kappa} - 1}{\sqrt{\kappa} + 1})y_{t+1} - \frac{\sqrt{\kappa} - 1}{\sqrt{\kappa} + 1} y_t
+    \end{align*}
+    \begin{theorem}[{\bf Bound on Nesterov's accelerated gradient descent speed}]
+    Let $f$ be a convex and $\beta$-smooth function, then Nesterov's accelerated gradient descent satisfies
+    \newline \\
+    \begin{equation}
+      f(y_t) - f(x^*) \leq \frac{2\beta\norm{x_1 - x^*}^2}{t^2}
+    \end{equation}
     \end{theorem} 
 \end{exampleblock}
 
