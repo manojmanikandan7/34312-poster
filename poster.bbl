@@ -19,87 +19,114 @@
 
 \refsection{0}
   \datalist[entry]{nyt/global//global/global}
-    \entry{dziugaite2017computing}{article}{}
-      \name{author}{2}{}{%
-        {{un=0,uniquepart=base,hash=9226e3e9f40624082119487c644bc224}{%
-           family={Dziugaite},
-           familyi={D\bibinitperiod},
-           given={Gintare\bibnamedelima Karolina},
-           giveni={G\bibinitperiod\bibinitdelim K\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=8c119ee3a501e8daf8a47ae46559c666}{%
-           family={Roy},
-           familyi={R\bibinitperiod},
-           given={Daniel\bibnamedelima M},
-           giveni={D\bibinitperiod\bibinitdelim M\bibinitperiod},
+    \entry{BubeckUpdatePost}{misc}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=9fa6589a90a8ae0c6aa2f54be62585c2}{%
+           family={Bubeck},
+           familyi={B\bibinitperiod},
+           given={Sebastian},
+           giveni={S\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{5f014aa7a50368441175aad976cbdb47}
-      \strng{fullhash}{5f014aa7a50368441175aad976cbdb47}
-      \strng{bibnamehash}{5f014aa7a50368441175aad976cbdb47}
-      \strng{authorbibnamehash}{5f014aa7a50368441175aad976cbdb47}
-      \strng{authornamehash}{5f014aa7a50368441175aad976cbdb47}
-      \strng{authorfullhash}{5f014aa7a50368441175aad976cbdb47}
-      \field{sortinit}{D}
-      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \strng{namehash}{9fa6589a90a8ae0c6aa2f54be62585c2}
+      \strng{fullhash}{9fa6589a90a8ae0c6aa2f54be62585c2}
+      \strng{bibnamehash}{9fa6589a90a8ae0c6aa2f54be62585c2}
+      \strng{authorbibnamehash}{9fa6589a90a8ae0c6aa2f54be62585c2}
+      \strng{authornamehash}{9fa6589a90a8ae0c6aa2f54be62585c2}
+      \strng{authorfullhash}{9fa6589a90a8ae0c6aa2f54be62585c2}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{year}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{arXiv preprint arXiv:1703.11008}
-      \field{title}{Computing nonvacuous generalization bounds for deep (stochastic) neural networks with many more parameters than training data}
-      \field{year}{2017}
-    \endentry
-    \entry{zhou2018non}{article}{}{}
-      \name{author}{5}{}{%
-        {{un=0,uniquepart=base,hash=512884fa585f2ef0e137d5c14e49bb94}{%
-           family={Zhou},
-           familyi={Z\bibinitperiod},
-           given={Wenda},
-           giveni={W\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=30db2f42d0dd8cf10ef82c5eae10096e}{%
-           family={Veitch},
-           familyi={V\bibinitperiod},
-           given={Victor},
-           giveni={V\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=d1350beaa02cb3655e6e908415ad5fb2}{%
-           family={Austern},
-           familyi={A\bibinitperiod},
-           given={Morgane},
-           giveni={M\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=c1552be0c6aa9c6e0fd91a130a682853}{%
-           family={Adams},
-           familyi={A\bibinitperiod},
-           given={Ryan\bibnamedelima P},
-           giveni={R\bibinitperiod\bibinitdelim P\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=6ebce25caeca70792e85946e1df6b0e5}{%
-           family={Orbanz},
-           familyi={O\bibinitperiod},
-           given={Peter},
-           giveni={P\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{c85a736ea1c9474bf3e0d67dcda71728}
-      \strng{fullhash}{dbfdc77d42b62bbaba516efc6f31c78e}
-      \strng{bibnamehash}{c85a736ea1c9474bf3e0d67dcda71728}
-      \strng{authorbibnamehash}{c85a736ea1c9474bf3e0d67dcda71728}
-      \strng{authornamehash}{c85a736ea1c9474bf3e0d67dcda71728}
-      \strng{authorfullhash}{dbfdc77d42b62bbaba516efc6f31c78e}
-      \field{sortinit}{Z}
-      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{year}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{arXiv preprint arXiv:1804.05862}
-      \field{title}{Non-vacuous generalization bounds at the imagenet scale: a PAC-bayesian compression approach}
+      \field{note}{\url{https://web.archive.org/web/20210124000724/https://blogs.princeton.edu/imabandit/2018/11/21/a-short-proof-for-nesterovs-momentum/}. Accessed 6 May 2026}
+      \field{title}{A short proof for Nesterov's momentum}
       \field{year}{2018}
     \endentry
+    \entry{sutskever}{inproceedings}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=8d569d1d5b8b5a7836017a98b430f959}{%
+           family={Sutskever},
+           familyi={S\bibinitperiod},
+           given={Ilya},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6811d5cc72244219e1b98cf2bb1b64f1}{%
+           family={Martens},
+           familyi={M\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ba040554cec389bc8b5dc4b20d44218c}{%
+           family={Dahl},
+           familyi={D\bibinitperiod},
+           given={George},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9a8750ccdb2a4cf14d2655face1ce016}{%
+           family={Hinton},
+           familyi={H\bibinitperiod},
+           given={Geoffrey},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \name{editor}{2}{}{%
+        {{hash=d98b5fd15360757d9d9f94eec243d6cb}{%
+           family={Dasgupta},
+           familyi={D\bibinitperiod},
+           given={Sanjoy},
+           giveni={S\bibinitperiod}}}%
+        {{hash=09a4af5c985fc9a46727803f19cd8272}{%
+           family={McAllester},
+           familyi={M\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Atlanta, Georgia, USA}%
+      }
+      \list{publisher}{1}{%
+        {PMLR}%
+      }
+      \strng{namehash}{07c96466e3b9e93bc5fe1db0e089e9d6}
+      \strng{fullhash}{9cdbdb5ed37d642e2881c7a467f38028}
+      \strng{bibnamehash}{07c96466e3b9e93bc5fe1db0e089e9d6}
+      \strng{authorbibnamehash}{07c96466e3b9e93bc5fe1db0e089e9d6}
+      \strng{authornamehash}{07c96466e3b9e93bc5fe1db0e089e9d6}
+      \strng{authorfullhash}{9cdbdb5ed37d642e2881c7a467f38028}
+      \strng{editorbibnamehash}{fae3c8d6c9aa902c16e025fabcad714c}
+      \strng{editornamehash}{fae3c8d6c9aa902c16e025fabcad714c}
+      \strng{editorfullhash}{fae3c8d6c9aa902c16e025fabcad714c}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Deep and recurrent neural networks (DNNs and RNNs respectively) are powerful models that were considered to be almost impossible to train using stochastic gradient descent with momentum. In this paper, we show that when stochastic gradient descent with momentum uses a well-designed random initialization and a particular type of slowly increasing schedule for the momentum parameter, it can train both DNNs and RNNs (on datasets with long-term dependencies) to levels of performance that were previously achievable only with Hessian-Free optimization. We find that both the initialization and the momentum are crucial since poorly initialized networks cannot be trained with momentum and well-initialized networks perform markedly worse when the momentum is absent or poorly tuned. Our success training these models suggests that previous attempts to train deep and recurrent neural networks from random initializations have likely failed due to poor initialization schemes. Furthermore, carefully tuned momentum methods suffice for dealing with the curvature issues in deep and recurrent network training objectives without the need for sophisticated second-order methods.}
+      \field{booktitle}{Proceedings of the 30th International Conference on Machine Learning}
+      \field{month}{17--19 Jun}
+      \field{number}{3}
+      \field{series}{Proceedings of Machine Learning Research}
+      \field{title}{On the importance of initialization and momentum in deep learning}
+      \field{volume}{28}
+      \field{year}{2013}
+      \field{pages}{1139\bibrangedash 1147}
+      \range{pages}{9}
+      \verb{file}
+      \verb http://proceedings.mlr.press/v28/sutskever13.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://proceedings.mlr.press/v28/sutskever13.html
+      \endverb
+      \verb{url}
+      \verb https://proceedings.mlr.press/v28/sutskever13.html
+      \endverb
+    \endentry
   \enddatalist
+  \missing{dziugaite2017computing}
+  \missing{zhou2018non}
 \endrefsection
 \endinput
 
