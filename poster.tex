@@ -7,11 +7,11 @@
 
 % poster template
 % \usepackage[orientation=landscape,size=a0,scale=1.4,debug]{beamerposter}
-\usepackage[orientation=landscape,size=a0,scale=1.3,debug]{beamerposter}
+\usepackage[orientation=landscape,size=a0,scale=1.25,debug]{beamerposter}
 % \usepackage[orientation=landscape,size=custom,width=160,height=100,scale=1.8,debug]{beamerposter}
 % \usepackage[ruled, vlined]{algorithm2e}
 \usetheme{combined}
-% \usefonttheme{default}
+% \{default}
 \usefonttheme[onlymath]{serif}
 
 % references backend=biber, style=alphabetic, citestyle=authoryear, ,hyperref=auto
@@ -166,46 +166,52 @@ cross/.default={1pt}}
 
 \begin{columns}[t]
 
-%-------------------------------------------------------------                          
+%-------------------------------------------------------------
 %COLUMN 1
 % ------------------------------------------------------------
 
 \begin{column}{.32\linewidth}
     \vspace{-18mm}
-    
-    \begin{exampleblock}{Introduction}
-    Recent works like \cite{dziugaite2017computing} and \cite{zhou2018non} have shown that one can obtain non-vacuous ``computational" PAC-Bayesian bounds on the risk of neural nets. In this work we improve on existing theoretical PAC-Bayesian risk bounds by using data-dependent priors sensitive to the geometrical properties of training and by considering carefully chosen clusters of multiple nets in tandem.  
-    
-    % These experiments strongly motivate the current work to search for stronger theoretical basis towards explaining the power of PAC-Bayesian risk bounds in explaining the generalization ability of neural nets. Previous PAC-Bayes bounds (and us too) have used data dependent priors on the geometric mean of the spectral norms of the layer matrices to try to track the first parameter above. In this work we also propose a mechanism of choosing the finite set priors in such a way that can also track the angular deflection in a data-dependent way. 
 
-    % {\it Secondly,} we go further to show how in the PAC-Bayesian framework one can leverage more out of the angle parameter by simultaneously training a clusters of nets that is by obtaining in tandem a finite set of classifiers/neural functions on the chosen architecture by simultaneously training multiple instances initialized at different by closeby weight vectors. Because of this use of clusters, compared to previous bounds our dependency on the distance from initialization is also more intricate and we are able to get more sensitive to the average case behaviour. Thus we build into the theory more data-dependent (and hence tunable) parameters which help us further improve over existing bounds. And to incorporate the effect of the cluster we need to prove new noise resilience theorems for neural nets. 
-    \end{exampleblock}
+    \begin{exampleblock}{Introduction}
+    Gradient Descent, originally discussed by \cite{cauchy1847methode}, is the simplest strategy to minimize a differentiable function $f$ on $\mathbb{R}_n$. It is well-known that the convergence rate for this algorithm is $O(1/k)$. Here, we discuss the lower bounds on the convergence rates for $\beta$-smooth convex functions in $O(1/k^2)$, and emphasize how Nesterov's Accelerated Gradient Descent achieves this bound. The main source of reference for this poster is \cite[Chapter 3]{bubeck2015convex}.
     
+    % Recent works like \cite{dziugaite2017computing} and \cite{zhou2018non} have shown that one can obtain non-vacuous ``computational" PAC-Bayesian bounds on the risk of neural nets. In this work we improve on existing theoretical PAC-Bayesian risk bounds by using data-dependent priors sensitive to the geometrical properties of training and by considering carefully chosen clusters of multiple nets in tandem.
+
+    % These experiments strongly motivate the current work to search for stronger theoretical basis towards explaining the power of PAC-Bayesian risk bounds in explaining the generalization ability of neural nets. Previous PAC-Bayes bounds (and us too) have used data dependent priors on the geometric mean of the spectral norms of the layer matrices to try to track the first parameter above. In this work we also propose a mechanism of choosing the finite set priors in such a way that can also track the angular deflection in a data-dependent way.
+
+    % {\it Secondly,} we go further to show how in the PAC-Bayesian framework one can leverage more out of the angle parameter by simultaneously training a clusters of nets that is by obtaining in tandem a finite set of classifiers/neural functions on the chosen architecture by simultaneously training multiple instances initialized at different by closeby weight vectors. Because of this use of clusters, compared to previous bounds our dependency on the distance from initialization is also more intricate and we are able to get more sensitive to the average case behaviour. Thus we build into the theory more data-dependent (and hence tunable) parameters which help us further improve over existing bounds. And to incorporate the effect of the cluster we need to prove new noise resilience theorems for neural nets.
+    \end{exampleblock}
+
     % \begin{exampleblock}{TO DO}
-    % Hello! 
+    % Hello!
     % \end{exampleblock}
 
 
     \begin{exampleblock}{Notation}
-      $\delta f(x)$ is the set of \textbf{subgradients} of the point $x \in \mathbb{R}^n$. Then the subgradient $g \in \delta f(x)$ satisfies $f(x) - f(y) \leq g^\top (x-y)$. \\
-      $e_1, \dots, e_n$ is the canonical basis of $\mathbb{R}^n$. 
+      $\delta f(x)$ is the set of \textbf{subgradients} of the point $x \in \mathbb{R}^n$. Then, the subgradient $g \in \delta f(x)$ satisfies $f(x) - f(y) \leq g^\top (x-y)$. \\
+      $e_1, \dots, e_n$ are the canonical basis of $\mathbb{R}^n$. \\
+      $x^*_s$ denotes the minimum vector at time $s$, $s\ge1$, $f_s^*$ its corresponding value for minimiser $f$.
     \end{exampleblock}
-   
+
    \begin{exampleblock}{Fastest theoretical speed for Gradient Descent}
+   Theorem (\ref{thm:3.14}) states that, no matter the gradient method provided, there
+   always exists a function $f$ such that when the gradient method is applied on
+   minimizing such $f$, the convergence rate is lower bounded as $O(1/k^2)$.
     \begin{theorem}[{\bf 1}] \label{thm:3.14}
-      Let $t \leq \frac{n-1}{2}$ and $\beta > 0$. There exists a $\beta$-smooth convex function $f$ such that for any black-box procedure satisfying 
+      Let $t \leq \frac{n-1}{2}$ and $\beta > 0$. There exists a $\beta$-smooth convex function $f$ such that for any black-box procedure satisfying
       $x_{t+1} \in \text{Span}(g_1, \dots, g_t)$ with $g_s \in \delta f(x_s)$:
       \begin{equation*}
         \mathop{\min}\limits_{1 \leq s \leq t} f(x_s) - f(x^*) \geq \frac{3\beta}{32} \frac{\norm{x_1 - x^*}^2}{(t + 1)^2}
       \end{equation*}
     \end{theorem}
     \begin{center}
-      \textcolor{red}{This gives us a bound on the speed of gradient descent of $O(1/t^2)$. We observe that this bound is achieved by Nesterov's Accelerated Gradient Descent}
+      \textcolor{red}{This gives us a lower bound on the speed of gradient descent of $O(1/t^2)$. We observe that this bound is achieved by Nesterov's Accelerated Gradient Descent}
     \end{center}
     \end{exampleblock}
-    
+
     \begin{exampleblock}{Crafting a $\beta$-smooth function $f$}
-      To construct a suitable function $f$ that satisfies Theorem (\ref{thm:3.14}), Bubeck constructs a symmetric and tri-diagonal matrix
+      To construct a suitable function $f$ that satisfies (subsequently, proves) Theorem (\ref{thm:3.14}), \cite{bubeck2015convex} constructs a symmetric and tridiagonal matrix
       \begin{equation*}
         (A_k)_{i,j} = \begin{cases}
           2, \ &i=j \ , \ i \leq k \\
@@ -215,14 +221,27 @@ cross/.default={1pt}}
       \end{equation*}
       and defines $f$ as:
       \begin{equation*}
-        f(x) = \frac{\beta}{8}x^\top A_{2t + 1}x - \frac{\beta}{4}x^\top e_1
+        f_s(x) = \frac{\beta}{8}x^\top A_s x - \frac{\beta}{4}x^\top e_1
       \end{equation*}
+      For $s \le t$, we have $x_s(i) = 0$ for $i = s,\ldots, n; n=2t+1$, which implies $x_s^\top A_{n} x_s \ge x_s^\top A_s x_s$. This implies,
+      \begin{equation}\label{eq:1}
+        f(x_s) - f^* = f(x_s) - f^*_{n} \geq f^*_s - f^*_{2t + 1} \geq f^*_t - f^*_{2t + 1}
+      \end{equation}
+
+      $x^*$ is the unique solution in the span of $e_1, \ldots , e_k$ of
+      $A_k x = e_1$. It is easy to verify that it is defined by $x^*_k(i) = 1 - \frac{i}{k+1}$ for $i = 1, \ldots , k$. Thus,
+      \begin{equation}\label{eq:2}
+        f^*_k = \frac{\beta}{8}(x^*_k)^\top A_k x^*_k - \frac{\beta}{4}(x^*_k)^\top e_1 = - \frac{\beta}{8}(x^*_k)^\top e_1 = -\frac{\beta}{8} \left(1 - \frac{1}{k+1}\right)
+      \end{equation}
+      From definition of $x^*_k$ for $k=n$, and $x_1=0$, we can derive lower bounds for $n \ge \frac{3}{2}||x_1 - x^*_n||_2^2$. 
       
+      This bound, along with substitution of Equation \ref{eq:2} in Equation \ref{eq:1} resolves to Theorem (\ref{thm:3.14}).
+            
     \end{exampleblock}
 \end{column}
 
 
-%-------------------------------------------------------------------------         
+%-------------------------------------------------------------------------
 %COLUMN 2
 % ------------------------------------------------------------------------
 
@@ -233,12 +252,9 @@ cross/.default={1pt}}
 
 
 
-
-
-
 \begin{exampleblock}{Descent Lemma}
-The following lemma establishes the per-step bound for gradient descent on smooth functions. The original 
-paper states the constrained case but for Nesterov's accelerated gradient descent in the smooth 
+The following lemma establishes the per-step bound for gradient descent on smooth functions. The original
+paper states the constrained case but for Nesterov's accelerated gradient descent in the smooth
 function case, we only need the unconstrained version.
 \begin{lemma}[\bf 2]
 Let $f:\mathbb{R}^n \rightarrow \mathbb{R}$ be a convex and $\beta$-smooth function. Let $x, y \in \mathbb{R}^n$ and $x^+ = x - \frac{1}{\beta}\nabla f(x)$.
@@ -268,7 +284,7 @@ Then the following holds true:
           \draw[->, thick] (noeud4) -- (noeud5) {};
           \draw[thick, dashed] (noeud3) -- (noeud6) {};
         \end{tikzpicture}
-        \end{center} 
+        \end{center}
       \caption{Illustration of Nesterov's accelerated gradient descent.}
       \label{fig:nesterovacc}
     \end{figure}
@@ -276,7 +292,7 @@ Then the following holds true:
     \begin{equation*}
       \lambda_0 = 0, \ \lambda_t = \frac{1 + \sqrt{1 + 4\lambda_{t-1}^2}}{2}, \ \text{and} \ \gamma_t = \frac{1 - \lambda_t}{\lambda_{t + 1}}
     \end{equation*}
-    Nesterov's accelerated gradient descent is described as follows. Start at an arbitrary initial point $x_1=y_1$ and then iterate 
+    Nesterov's accelerated gradient descent is described as follows. Start at an arbitrary initial point $x_1=y_1$ and then iterate
     the following equations for $t\geq1$
     \begin{align*}
     y_{t+1} &= x_t - \frac{1}{\beta}\nabla f(x_t) \\
@@ -310,10 +326,10 @@ This gives us the $O(1/t^2)$ complexity. \textcolor{red}{Write more about it her
 
 \begin{exampleblock}{Main Ideas for Theorem $3$}
 \begin{itemize}
-  \item Nesterov's accelerated gradient descent uses the ideas from classical momentum gradient descent (Sutskever et al., 2013). 
-  $x_{t+1}$ can be rewritten as $x_{t+1} = y_{t+1} + \gamma_t(y_{t+1} - y_{t})$ which reads as $x_{t+1}$ overshoots $y_{t+1}$ along the vector 
+  \item Nesterov's accelerated gradient descent uses the ideas from classical momentum gradient descent (Sutskever et al., 2013).
+  $x_{t+1}$ can be rewritten as $x_{t+1} = y_{t+1} + \gamma_t(y_{t+1} - y_{t})$ which reads as $x_{t+1}$ overshoots $y_{t+1}$ along the vector
   $(y_{t+1} - y_{t})$ with some ``momentum'' given by $\gamma_t$
-  \item The choices for $\lambda_t$ and $\gamma_t$ are not arbitrary. 
+  \item The choices for $\lambda_t$ and $\gamma_t$ are not arbitrary.
 \end{itemize}
 \end{exampleblock}
 
@@ -321,7 +337,7 @@ This gives us the $O(1/t^2)$ complexity. \textcolor{red}{Write more about it her
 
 \begin{exampleblock}{Demonstration of stability of the relevant geometrical properties of training}
 \vspace{2.2mm}
-In the {\it \color{violet} figure to the left} we plot the initial parameter norm $\norm{\B}_2$ vs the final parameter norm $\norm{\A}_2$ for training nets of different depths at width $100$ on the CIFAR-10 dataset. Thus its demonstrated that the multiplicative factor with which the norm increases during training is fairly stable to architectural changes. 
+In the {\it \color{violet} figure to the left} we plot the initial parameter norm $\norm{\B}_2$ vs the final parameter norm $\norm{\A}_2$ for training nets of different depths at width $100$ on the CIFAR-10 dataset. Thus its demonstrated that the multiplicative factor with which the norm increases during training is fairly stable to architectural changes.
 
 \begin{figure}[htbp]
   \begin{subfigure}[b]{.45\textwidth}
@@ -330,18 +346,18 @@ In the {\it \color{violet} figure to the left} we plot the initial parameter nor
   \end{subfigure}
   %\caption{Initial parameter norm $\norm{\B}_2$ vs final parameter norm $\norm{\A}_2$ with increasing depths (at width $100$) on the CIFAR-10 dataset. $10$ trials are displayed for each architecture.}
   %\label{fig:dcifstorel2norm}
-  \hfill 
-  \hspace{-10mm} 
+  \hfill
+  \hspace{-10mm}
   \begin{subfigure}[b]{.45\textwidth}
     \centering
   \includegraphics[width=0.95\textwidth]{dcif_kdetheta.pdf}
   %\caption{}
   %\caption{(Left) Initial parameter norm $\norm{\B}_2$ vs final parameter norm $\norm{\A}_2$ with increasing depths (at width $100$) on the CIFAR-10 dataset. $10$ trials are displayed for each architecture.  (Right) Gaussian kernel density estimate on $10$ trials of the experiment (for every depth $d$ and $100$ width) measuring the angular deviation of the weight vector under training}
   %\label{fig:dciftheta}
-  \end{subfigure} 
+  \end{subfigure}
 \end{figure}
 
-In the {\it \color{violet} figure to the right} is displayed the Gaussian kernel density estimate on $10$ trials of the experiment (at different depths and $100$ width) measuring the angular deviation of the weight vector under training. This deflection angle only decreases slightly with depth and showed negligible dependence over the widths tried. 
+In the {\it \color{violet} figure to the right} is displayed the Gaussian kernel density estimate on $10$ trials of the experiment (at different depths and $100$ width) measuring the angular deviation of the weight vector under training. This deflection angle only decreases slightly with depth and showed negligible dependence over the widths tried.
 \vspace{2.2mm}
 % \begin{figure}[htbp]
 %   \centering
@@ -354,10 +370,10 @@ In the {\it \color{violet} figure to the right} is displayed the Gaussian kernel
 
 
 \begin{exampleblock}{References}
-    %\small 
-    \vspace{1mm} 
+    %\small
+    \vspace{1mm}
 \printbibliography
-\vspace{1mm} 
+\vspace{1mm}
 \end{exampleblock}
 
 \end{column}
