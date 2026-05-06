@@ -371,14 +371,12 @@ Then the following holds true:
       %
       % --- TELESCOPING: derive gamma_t ---
       %
-      \item To obtain the telescopic sum, denote
-      $v_t := \tfrac{\beta}{2}\norm{y_t + \lambda_t d_t - x^*}^2$.
-      We need:
+      \item To obtain the telescopic sum, we need
       \begin{equation*}
         y_t + \lambda_t(d_t + g_t)
           \;=\; y_{t+1} + \lambda_{t+1}\,d_{t+1}
       \end{equation*}
-      Since $y_{t+1} = y_t + d_t + g_t$ and
+      which comes from observing~(\ref{eq:dagger}). Since $y_{t+1} = y_t + d_t + g_t$ and
       $d_{t+1} = x_{t+1} - y_{t+1} = -\gamma_t(d_t + g_t)$:
       \begin{align*}
         \lambda_t(d_t + g_t)
@@ -391,12 +389,13 @@ Then the following holds true:
       %
       % --- SELECTING lambda_t ---
       %
-      \item With~(\ref{eq:dagger}) now telescoping as
+      \item  By denoting
+      $u_t := \tfrac{\beta}{2}\norm{y_t + \lambda_t d_t - x^*}^2$, with~(\ref{eq:dagger}) now telescoping as
       $\lambda_t^2\,\delta_{t+1} - (\lambda_t^2 {-} \lambda_t)\,\delta_t
-      \leq v_t - v_{t+1}$, we require
+      \leq u_t - u_{t+1}$, we require
       $\lambda_t^2 - \lambda_t = \lambda_{t-1}^2$ for the left side
       to collapse. Summing from $t=1$ to $T{-}1$ and using
-      $v_1 = \tfrac{\beta}{2}\norm{x_1 - x^*}^2$
+      $u_1 = \tfrac{\beta}{2}\norm{x_1 - x^*}^2$
       (since $d_1 = 0$) and $\lambda_{T-1} \geq T/2$
       completes the proof.
     \end{itemize}
