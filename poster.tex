@@ -155,7 +155,7 @@ cross/.default={1pt}}
 
 
 % document properties
-\title{Improving PAC-Bayes bounds for neural nets}
+\title{Nesterov's Accelerated Gradient Descent's Speed}
 \author{\Large Joshua Tan, Manoj Manikandan, Rohan Navaratnam}
 \institute{Department of Computer Science, University of Manchester}
 
@@ -189,11 +189,14 @@ cross/.default={1pt}}
 
 
     \begin{exampleblock}{Notation}
-      $\delta f(x)$ is the set of \textbf{subgradients} of the point $x \in \mathbb{R}^n$. Then, the subgradient $g \in \delta f(x)$ satisfies $f(x) - f(y) \leq g^\top (x-y)$. \\
-      $e_1, \dots, e_n$ are the canonical basis of $\mathbb{R}^n$. \\
-      $x^*_s$ denotes the minimum vector at time $s$, $s\ge1$, $f_s^*$ its corresponding value for minimiser $f$.
+      \begin{itemize}
+      \item $\delta f(x)$ is the set of \textbf{subgradients} of the point $x \in \mathbb{R}^n$. Then the subgradient $g \in \delta f(x)$ satisfies $f(x) - f(y) \leq g^\top (x-y)$.
+      \item $e_1, \dots, e_n$ is the canonical basis of $\mathbb{R}^n$.
+      \item $x^* \in \mathbb{R}^n$ is a point such that it is the minima in any optimisation problem, i.e. $f(x^*) = \mathop{\min}\limits_{x \in \mathbb{R}^n} f(x)$. 
+      We always assume $x^*$ exists.
+      \item $\norm{\cdot}$ is always the Euclidean norm $\norm{x} = \sqrt{x_1^2 + x_2^2 + \dots + x_n^2}$ for $x \in \mathbb{R}^n$
+      \end{itemize}
     \end{exampleblock}
-
    \begin{exampleblock}{Fastest theoretical speed for Gradient Descent}
    Theorem (\ref{thm:3.14}) states that, no matter the gradient method provided, there
    always exists a function $f$ such that when the gradient method is applied on
@@ -238,6 +241,12 @@ cross/.default={1pt}}
       This bound, along with substitution of Equation \ref{eq:2} in Equation \ref{eq:1} resolves to Theorem (\ref{thm:3.14}).
             
     \end{exampleblock}
+    \begin{exampleblock}{References}
+    %\small 
+        \vspace{1mm} 
+    \printbibliography
+    \vspace{1mm} 
+    \end{exampleblock}
 \end{column}
 
 
@@ -256,11 +265,11 @@ cross/.default={1pt}}
 The following lemma establishes the per-step bound for gradient descent on smooth functions. The original
 paper states the constrained case but for Nesterov's accelerated gradient descent in the smooth
 function case, we only need the unconstrained version.
-\begin{lemma}[\bf 2]
+\begin{lemma}[\bf 2]\label{lemma:3.6}
 Let $f:\mathbb{R}^n \rightarrow \mathbb{R}$ be a convex and $\beta$-smooth function. Let $x, y \in \mathbb{R}^n$ and $x^+ = x - \frac{1}{\beta}\nabla f(x)$.
 Then the following holds true:
 \begin{equation*}
-  f(x^+) - f(y) \leq \beta(x^+ - x)^\top (x - y) - \frac{1}{2\beta}\norm{\beta(x^+ - x)}^2
+  f(x^+) - f(y) \leq \nabla f(x)^\top (x - y) - \frac{1}{2\beta}\norm{\nabla f(x)}^2
 \end{equation*}
 \end{lemma}
 \end{exampleblock}
@@ -294,10 +303,13 @@ Then the following holds true:
     \end{equation*}
     Nesterov's accelerated gradient descent is described as follows. Start at an arbitrary initial point $x_1=y_1$ and then iterate
     the following equations for $t\geq1$
-    \begin{align*}
-    y_{t+1} &= x_t - \frac{1}{\beta}\nabla f(x_t) \\
-    x_{t+1} &= (1 - \gamma_t)y_{t+1} - \gamma_t y_t
-    \end{align*}
+    \begin{align}
+    y_{t+1} &= x_t - \frac{1}{\beta}\nabla f(x_t) \label{nesterov:y}\\  % <-- label fixed
+    x_{t+1} &= (1 - \gamma_t)y_{t+1} + \gamma_t y_t \label{nesterov:x}  % <-- label fixed, sign fixed
+    \end{align}
+    Nesterov's accelerated gradient descent uses the ideas from classical momentum gradient descent (\cite{sutskever}). 
+    $x_{t+1}$ can be rewritten as $x_{t+1} = y_{t+1} - \gamma_t(y_{t+1} - y_{t})$ which reads as $x_{t+1}$ overshoots $y_{t+1}$ along the vector 
+    $(y_{t+1} - y_{t})$ with some ``momentum'' given by $\gamma_t$ % <-- sign fixed (- instead of +)
     \begin{theorem}[{\bf 3}]
     Let $f$ be a convex and $\beta$-smooth function, then Nesterov's accelerated gradient descent satisfies
     \newline \\
@@ -306,33 +318,56 @@ Then the following holds true:
     \end{equation*}
     \end{theorem}
 
-This gives us the $O(1/t^2)$ complexity. \textcolor{red}{Write more about it here}
-\end{exampleblock}
+    This gives us the $O(1/t^2)$ complexity. \textcolor{red}{Write more about it here}
+    \end{exampleblock}
 
-\end{column}
-
-
+    \end{column}
 
 
+    %------------------------------------------
+    %Column 3
+    %------------------------------------------
 
-%------------------------------------------
-%Column 3
-%------------------------------------------
+    \begin{column}{.32\linewidth}
+    \vspace{-18mm}
 
-
-
-\begin{column}{.32\linewidth}
-\vspace{-18mm}
-
-\begin{exampleblock}{Main Ideas for Theorem $3$}
-\begin{itemize}
-  \item Nesterov's accelerated gradient descent uses the ideas from classical momentum gradient descent (Sutskever et al., 2013).
-  $x_{t+1}$ can be rewritten as $x_{t+1} = y_{t+1} + \gamma_t(y_{t+1} - y_{t})$ which reads as $x_{t+1}$ overshoots $y_{t+1}$ along the vector
-  $(y_{t+1} - y_{t})$ with some ``momentum'' given by $\gamma_t$
-  \item The choices for $\lambda_t$ and $\gamma_t$ are not arbitrary.
-\end{itemize}
-\end{exampleblock}
-
+    \begin{exampleblock}{Key insights from Proof of Theorem $3$}
+    \begin{itemize}
+      \item We can reverse engineer both $\lambda_t$ and $\gamma_t$ to show they are not arbitrary. If we rewrite (\ref{nesterov:x}) as $x_{t} = y_{t} + d_t$ 
+      where $d_t = \gamma_t (y_{t} - y_{t-1})$ is the momentum term and 
+      let $g_{t} = -\frac{1}{\beta}\nabla f(y_{t} + d_t)$ be the gradient term in $y_{t+1}$ by rewriting $x_t$ as above (\ref{nesterov:y}), we get the following two 
+      inequalities when applying Lemma~\ref{lemma:3.6}:
+      \begin{align*}
+        f(y_{t+1}) - f(y_t) &\leq -\frac{\beta}{2}(\norm{g_t}^2 - 2g_t \cdot d_t)  \tag{$\star$} \label{ineq:1}\\
+        f(y_{t+1}) - f(x^*) &\leq -\frac{\beta}{2}(\norm{g_t}^2 - 2g_t \cdot (x_t + d_t - x^*)) \tag{$\star\star$} \label{ineq:2} % <-- x_y -> x_t
+      \end{align*}
+      \item The big idea is to use the identity $\norm{a}^2 + 2ab = \norm{a+b}^2 - \norm{b}^2$ on the combination of both inequalities to obtain a telescopic sum~\cite{BubeckUpdatePost}. 
+      Let $\delta_t = f(y_{t}) - f(x^*)$. Then by multiplying (\ref{ineq:1}) by $(\lambda_t - 1)$ and adding (\ref{ineq:2}) we obtain:
+      \begin{align*}
+      \lambda_t \delta_{t+1} - (\lambda_t - 1)\delta_t
+        &\leq -\frac{\beta}{2} \bigl(\lambda_t \|g_t\|^2 + 2\, g_t \cdot(x_t + \lambda_t d_t - x^*)\bigr) \\
+        &= -\frac{\beta}{2}\frac{1}{\lambda_t} \bigl(\|x_t + \lambda_t d_t - x^* + \lambda_t g_t\|^2 \\
+        &\phantom{{}= -\frac{\beta}{2}\frac{1}{\lambda_t} \bigl(}
+          - \|\,x_t + \lambda_t d_t - x^*\|^2\bigr) \tag{$\dagger$} \label{eq:1}
+    \end{align*}
+      where the equality comes by applying the identity with $a = \lambda_t g_t$ and $b = x_t + \lambda_t d_t - x^*$.
+      \item To obtain the telescopic sum, we need
+      \begin{equation*}
+        x_t + \lambda_t d_t - x^* + \lambda_t g_t = x_{t+1} + \lambda_{t+1} d_{t+1} - x^*
+      \end{equation*}
+      which comes from observing (\ref{eq:1}). Since $d_{t+1} = x_{t+1} - y_{t+1} = -\gamma_t (d_t + g_t)$ and $x_{t+1} = x_t + g_t + d_t$: % <-- gamma_{t+1} -> -gamma_t
+      \begin{align*}
+        x_t + \lambda_t d_t - x^* + \lambda_t g_t &= x_t + g_t + d_t - \lambda_{t+1} \cdot \gamma_t (g_t + d_t) - x^* \\ % <-- sign and index fixed
+        \lambda_t (d_t + g_t) &= (d_t + g_t)(1 - \lambda_{t+1}\cdot\gamma_t) % <-- sign and index fixed
+      \end{align*}
+      and hence $\gamma_t = \frac{1 - \lambda_t}{\lambda_{t+1}}$ % <-- gamma_{t+1} -> gamma_t
+      \item Now to select $\lambda_t$, by multiplying $\lambda_t$ to (\ref{eq:1}) and denoting $u_t := \frac{\beta}{2}\norm{x_t + \lambda_t d_t - x^*}$ we get
+      \begin{equation*}
+        \lambda_t^2 \delta_{t+1} - (\lambda_t^2 - \lambda_t)\delta_t \leq u_t - u_{t+1}
+      \end{equation*}
+      and therefore $\lambda_t^2 - \lambda_t = \lambda_{t-1}^2$ is required to obtain the full telescopic sum. The rest of the proof follows by induction.
+    \end{itemize}
+    \end{exampleblock}
 
 
 \begin{exampleblock}{Demonstration of stability of the relevant geometrical properties of training}
@@ -368,13 +403,6 @@ In the {\it \color{violet} figure to the right} is displayed the Gaussian kernel
 
 \end{exampleblock}
 
-
-\begin{exampleblock}{References}
-    %\small
-    \vspace{1mm}
-\printbibliography
-\vspace{1mm}
-\end{exampleblock}
 
 \end{column}
 
