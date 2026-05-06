@@ -187,42 +187,37 @@ cross/.default={1pt}}
 
 
     \begin{exampleblock}{Notation}
-    All losses considered are multi-class margin losses. Training data-sets (denoted as $S$) will be assumed to be of size $m$ and contained in a ball of radius $B$, centered at the origin in $\R^n$.
-    Define $f_{\A}: \R^n \to \R^k$ to be a depth-$d$ neural-network with maximum width $h$, whose $\ell^\text{th}$ layer has weight matrix $\A_\ell$. The first $d-1$ layers of $f_{\A}$ use the \textsc{Relu} non-linear activation. $\A$ is the vector of parameters formed by concatenating vectorized layer matrices, i.e. $\A$ denotes the vector $[\mathrm{vec}(\A_1); \ldots; \mathrm{vec}(\A_d)]$ whose each coordinate is a distinct trainable weight in the net.
-    %Let ${\cal N}_{(\A,\sigma^2)}$ denote the isotropic multivariate Gaussian probability distribution with mean $\A$ and variance $\sigma^2 \mathbf{I}$
-    \newline \\
-    Define $\beta(\A) = \big ( \prod\nolimits_{\ell=1}\nolimits^d \norm{A_\ell}_2 \big )^{1/d}$. We will omit the argument $\A$ whenever the neural-network under consideration is clear from the context. {\it Clearly $\beta^d$ upperbounds the Lipschitz-constant for $f_{\A}$.}
-    \newline \\ 
-    Let $\{ {\A}_i \in \R^{\dim(\A)} \mid  i=1,..,k_1 \}$ denote a set of $k_1 \geq 2$ neural net weight vectors on the underlying architecture of $f_{\A}$. Let $\{p_i \mid i=1, \ldots, k_1\}$ be a set of non-zero scalars s.t $\sum_i p_i = 1$. Define $\beta_i := \beta(\A_i)$.  
-   \end{exampleblock}
+      $\delta f(x)$ is the set of \textbf{subgradients} of the point $x \in \mathbb{R}^n$. Then the subgradient $g \in \delta f(x)$ satisfies $f(x) - f(y) \leq g^\top (x-y)$. \\
+      $e_1, \dots, e_n$ is the canonical basis of $\mathbb{R}^n$. 
+    \end{exampleblock}
    
-   \begin{exampleblock}{Controlled output perturbation with a mixture of Gaussians sampling for the weights}
-    \begin{theorem}[{\bf 1}] 
-    Suppose the following condition holds for some $\epsilon >0$, 
-    %\vspace{-2mm} 
-    \[ \forall i {\in} \{1\ldots k_1\}, \x {\in} S\  \norm{f_{\A_i}(\x) {-} f_{\A}(\x)} \leq \epsilon \norm{f_{\A}(\x)} \]
-    %\vspace{-3mm} 
-    Then for every $\gamma > \epsilon \max_{\x \in S} \norm{f_{\A}(\x)}$, we have,
-    \begin{align} 
-    \nonumber \mathbb{P}_{A' \sim \text{MG(posterior)}}
-    &{\Big[} \max_{\x \in S} \norm{f_{A'}(\x) {-} f_A(\x)} {>} 2 \gamma  {\Big]}
-    \leq \delta
-    \end{align}
-    ~\\ 
-    Where $\text{MG(posterior)}(\w) = \sum_i p_i \mathcal{N}_{(\A_i, \sigma^2)}(\w)$ 
-    ~\\ and $\sigma \le \frac{1}{\sqrt{2h \log \left ( \frac{2dhk_1}{\delta} \right )}}  \min_{1 \le i \le k_1} \min \left \{ \frac{ \beta_i }{d} , \frac{\gamma}{k_1 edB p_i \beta_i ^{d-1}}  \right \}$. \qed 
-    \end{theorem} 
+   \begin{exampleblock}{Fastest theoretical speed for Gradient Descent}
+    \begin{theorem}[{\bf 1}] \label{thm:3.14}
+      Let $t \leq \frac{n-1}{2}$ and $\beta > 0$. There exists a $\beta$-smooth convex function $f$ such that for any black-box procedure satisfying 
+      $x_{t+1} \in \text{Span}(g_1, \dots, g_t)$ with $g_s \in \delta f(x_s)$:
+      \begin{equation*}
+        \mathop{\min}\limits_{1 \leq s \leq t} f(x_s) - f(x^*) \geq \frac{3\beta}{32} \frac{\norm{x_1 - x^*}^2}{(t + 1)^2}
+      \end{equation*}
+    \end{theorem}
     \begin{center}
-        {\it \color{violet} Now we will use this above noise resilience theorem about nets to get finer data-dependent PAC-Bayesian risk bounds on neural nets.}
+      \textcolor{red}{This gives us a bound on the speed of gradient descent of $O(1/t^2)$. We observe that this bound is achieved by Nesterov's Accelerated Gradient Descent}
     \end{center}
     \end{exampleblock}
     
-    \begin{exampleblock}{Defining ``Nice'' training dataset}
-    We call a training dataset $S$ as $(\epsilon,\gamma)-$nice w.r.t neural weight vectors $\A$ and $\{\A_i\}_{i=1}^{k_1}$ if it satisfies the following two conditions, 
-    \begin{enumerate}
-    \item $\max_{\x \in S} \norm{f_{\A_i}(\x) - f_{\A}(\x)} \leq \epsilon \norm{f_{\A}(\x)}, \forall 1 {\le} i {\le} k_1$
-    \item $\gamma > \epsilon \max_{\x \in S} \norm{f_{\A}(\x)}$
-    \end{enumerate}
+    \begin{exampleblock}{Crafting a $\beta$-smooth function $f$}
+      To construct a suitable function $f$ that satisfies Theorem (\ref{thm:3.14}), Bubeck constructs a symmetric and tri-diagonal matrix
+      \begin{equation*}
+        (A_k)_{i,j} = \begin{cases}
+          2, \ &i=j \ , \ i \leq k \\
+          -1, \ &j \in \{i - 1, i + 1\}, \ i \leq k, \ j \neq k + 1 \\
+          0, &\text{ otherwise}
+        \end{cases}
+      \end{equation*}
+      and defines $f$ as:
+      \begin{equation*}
+        f(x) = \frac{\beta}{8}x^\top A_{2t + 1}x - \frac{\beta}{4}x^\top e_1
+      \end{equation*}
+      
     \end{exampleblock}
 \end{column}
 
@@ -245,11 +240,11 @@ cross/.default={1pt}}
 The following lemma establishes the per-step bound for gradient descent on smooth functions. The original 
 paper states the constrained case but for Nesterov's accelerated gradient descent in the smooth 
 function case, we only need the unconstrained version.
-\begin{lemma}[\bf 1]
-Let $f:\mathbb{R}^n \rightarrow \mathbb{R}^n$ be a convex and $\beta$-smooth function. Let $x, y \in \mathbb{R}^n$ and $x^+ = x - \frac{1}{\beta}\nabla f(x)$.
+\begin{lemma}[\bf 2]
+Let $f:\mathbb{R}^n \rightarrow \mathbb{R}$ be a convex and $\beta$-smooth function. Let $x, y \in \mathbb{R}^n$ and $x^+ = x - \frac{1}{\beta}\nabla f(x)$.
 Then the following holds true:
 \begin{equation*}
-  f(x^+) - f(y) \leq \nabla f(x)^\top (x - y) - \frac{1}{2\beta}\norm{\nabla f(x)}^2
+  f(x^+) - f(y) \leq \beta(x^+ - x)^\top (x - y) - \frac{1}{2\beta}\norm{\beta(x^+ - x)}^2
 \end{equation*}
 \end{lemma}
 \end{exampleblock}
@@ -287,7 +282,7 @@ Then the following holds true:
     y_{t+1} &= x_t - \frac{1}{\beta}\nabla f(x_t) \\
     x_{t+1} &= (1 - \gamma_t)y_{t+1} - \gamma_t y_t
     \end{align*}
-    \begin{theorem}[{\bf 2}]
+    \begin{theorem}[{\bf 3}]
     Let $f$ be a convex and $\beta$-smooth function, then Nesterov's accelerated gradient descent satisfies
     \newline \\
     \begin{equation*}
@@ -313,12 +308,12 @@ This gives us the $O(1/t^2)$ complexity. \textcolor{red}{Write more about it her
 \begin{column}{.32\linewidth}
 \vspace{-18mm}
 
-\begin{exampleblock}{Main Ideas for Theorem $2$}
+\begin{exampleblock}{Main Ideas for Theorem $3$}
 \begin{itemize}
-  \item Nesterov's accelerated gradient descent uses the ideas from classical momentum gradient descent (cite), the gradient is computed at $x_t$ to produce $y_{t+1}$ but 
-  the next $x_{t+1}$ is not simply $y_{t+1}$. $x_{t+1}$ overshoots $y_{t+1}$ in the direction of the most recent step $y_t$ with some ``momentum'' given by $(1 - \gamma_t)$ and $\gamma_t$ 
-  on $y_{t+1}$ and $y_t$ respectively.
-  \item The sequence $\lambda_t$ comes from the need to satisfy $\lambda_{t-1}^2 = \lambda_{t}^2 - \lambda_t$. 
+  \item Nesterov's accelerated gradient descent uses the ideas from classical momentum gradient descent (Sutskever et al., 2013). 
+  $x_{t+1}$ can be rewritten as $x_{t+1} = y_{t+1} + \gamma_t(y_{t+1} - y_{t})$ which reads as $x_{t+1}$ overshoots $y_{t+1}$ along the vector 
+  $(y_{t+1} - y_{t})$ with some ``momentum'' given by $\gamma_t$
+  \item The choices for $\lambda_t$ and $\gamma_t$ are not arbitrary. 
 \end{itemize}
 \end{exampleblock}
 
