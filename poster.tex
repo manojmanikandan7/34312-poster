@@ -153,7 +153,6 @@ cross/.default={1pt}}
 \newcommand{\method}{Latent ODE}
 \newcommand{\cnfx}{\sol}
 
-
 % document properties
 \title{Nesterov's Accelerated Gradient Descent's Speed}
 \author{\Large Joshua Tan, Manoj Manikandan, Rohan Navaratnam}
@@ -241,12 +240,7 @@ cross/.default={1pt}}
       This bound, along with substitution of Equation \ref{eq:2} in Equation \ref{eq:1} resolves to Theorem (\ref{thm:3.14}).
             
     \end{exampleblock}
-    \begin{exampleblock}{References}
-    %\small 
-        \vspace{1mm} 
-    \printbibliography
-    \vspace{1mm} 
-    \end{exampleblock}
+
 \end{column}
 
 
@@ -348,7 +342,7 @@ Then the following holds true:
         &\leq -\frac{\beta}{2} \bigl(\lambda_t \|g_t\|^2 + 2\, g_t \cdot(x_t + \lambda_t d_t - x^*)\bigr) \\
         &= -\frac{\beta}{2}\frac{1}{\lambda_t} \bigl(\|x_t + \lambda_t d_t - x^* + \lambda_t g_t\|^2 \\
         &\phantom{{}= -\frac{\beta}{2}\frac{1}{\lambda_t} \bigl(}
-          - \|\,x_t + \lambda_t d_t - x^*\|^2\bigr) \tag{$\dagger$} \label{eq:1}
+          - \|\,x_t + \lambda_t d_t - x^*\|^2\bigr) \tag{$\dagger$} \label{eq:3}
     \end{align*}
       where the equality comes by applying the identity with $a = \lambda_t g_t$ and $b = x_t + \lambda_t d_t - x^*$.
       \item To obtain the telescopic sum, we need
@@ -370,38 +364,12 @@ Then the following holds true:
     \end{exampleblock}
 
 
-\begin{exampleblock}{Demonstration of stability of the relevant geometrical properties of training}
-\vspace{2.2mm}
-In the {\it \color{violet} figure to the left} we plot the initial parameter norm $\norm{\B}_2$ vs the final parameter norm $\norm{\A}_2$ for training nets of different depths at width $100$ on the CIFAR-10 dataset. Thus its demonstrated that the multiplicative factor with which the norm increases during training is fairly stable to architectural changes.
-
-\begin{figure}[htbp]
-  \begin{subfigure}[b]{.45\textwidth}
-    \centering
-  \includegraphics[width=\textwidth]{dcifstorel2norm.pdf}
-  \end{subfigure}
-  %\caption{Initial parameter norm $\norm{\B}_2$ vs final parameter norm $\norm{\A}_2$ with increasing depths (at width $100$) on the CIFAR-10 dataset. $10$ trials are displayed for each architecture.}
-  %\label{fig:dcifstorel2norm}
-  \hfill
-  \hspace{-10mm}
-  \begin{subfigure}[b]{.45\textwidth}
-    \centering
-  \includegraphics[width=0.95\textwidth]{dcif_kdetheta.pdf}
-  %\caption{}
-  %\caption{(Left) Initial parameter norm $\norm{\B}_2$ vs final parameter norm $\norm{\A}_2$ with increasing depths (at width $100$) on the CIFAR-10 dataset. $10$ trials are displayed for each architecture.  (Right) Gaussian kernel density estimate on $10$ trials of the experiment (for every depth $d$ and $100$ width) measuring the angular deviation of the weight vector under training}
-  %\label{fig:dciftheta}
-  \end{subfigure}
-\end{figure}
-
-In the {\it \color{violet} figure to the right} is displayed the Gaussian kernel density estimate on $10$ trials of the experiment (at different depths and $100$ width) measuring the angular deviation of the weight vector under training. This deflection angle only decreases slightly with depth and showed negligible dependence over the widths tried.
-\vspace{2.2mm}
-% \begin{figure}[htbp]
-%   \centering
-%   \includegraphics[width=0.5\linewidth]{dcif_kdetheta.pdf}
-%   \caption{Gaussian kernel density estimate on $10$ trials of the experiment (for every depth $d$ and $100$ width) measuring the angular deviation of the weight vector under training}
-%   \label{fig:dciftheta}
-% \end{figure}
-
-\end{exampleblock}
+    \begin{exampleblock}{References}
+    %\small 
+        \vspace{1mm} 
+    \printbibliography
+    \vspace{1mm} 
+    \end{exampleblock}
 
 
 \end{column}
@@ -409,7 +377,7 @@ In the {\it \color{violet} figure to the right} is displayed the Gaussian kernel
 \end{columns}
 \end{frame}
 
-\end{document}
+\end{document} 
 
 
 
@@ -417,4 +385,4 @@ In the {\it \color{violet} figure to the right} is displayed the Gaussian kernel
 
 
 % \nocite{*}
-% \tiny {\bibliographystyle{plainnat}}
+% \tiny {}
