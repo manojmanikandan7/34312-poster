@@ -50,7 +50,7 @@
       \field{title}{Computing nonvacuous generalization bounds for deep (stochastic) neural networks with many more parameters than training data}
       \field{year}{2017}
     \endentry
-    \entry{zhou2018non}{article}{}
+    \entry{zhou2018non}{article}{}{}
       \name{author}{5}{}{%
         {{un=0,uniquepart=base,hash=512884fa585f2ef0e137d5c14e49bb94}{%
            family={Zhou},
