@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 3.3 $
+% $ biblatex bbl format version 3.2 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -18,8 +18,8 @@
 
 
 \refsection{0}
-  \datalist[entry]{nyt/global//global/global/global}
-    \entry{dziugaite2017computing}{article}{}{}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{dziugaite2017computing}{article}{}
       \name{author}{2}{}{%
         {{un=0,uniquepart=base,hash=9226e3e9f40624082119487c644bc224}{%
            family={Dziugaite},
@@ -36,68 +36,21 @@
       }
       \strng{namehash}{5f014aa7a50368441175aad976cbdb47}
       \strng{fullhash}{5f014aa7a50368441175aad976cbdb47}
-      \strng{fullhashraw}{5f014aa7a50368441175aad976cbdb47}
       \strng{bibnamehash}{5f014aa7a50368441175aad976cbdb47}
       \strng{authorbibnamehash}{5f014aa7a50368441175aad976cbdb47}
       \strng{authornamehash}{5f014aa7a50368441175aad976cbdb47}
       \strng{authorfullhash}{5f014aa7a50368441175aad976cbdb47}
-      \strng{authorfullhashraw}{5f014aa7a50368441175aad976cbdb47}
       \field{sortinit}{D}
       \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
       \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
+      \field{labeldatesource}{year}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{arXiv preprint arXiv:1703.11008}
       \field{title}{Computing nonvacuous generalization bounds for deep (stochastic) neural networks with many more parameters than training data}
       \field{year}{2017}
     \endentry
-    \entry{neyshabur2017pac}{article}{}{}
-      \name{author}{4}{}{%
-        {{un=0,uniquepart=base,hash=e5f9e207dc41c0bc364d3e1d7be37cf1}{%
-           family={Neyshabur},
-           familyi={N\bibinitperiod},
-           given={Behnam},
-           giveni={B\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=666205762228d3cb67197dabe1b1f6e6}{%
-           family={Bhojanapalli},
-           familyi={B\bibinitperiod},
-           given={Srinadh},
-           giveni={S\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=09a4af5c985fc9a46727803f19cd8272}{%
-           family={McAllester},
-           familyi={M\bibinitperiod},
-           given={David},
-           giveni={D\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=4a4fc057d8331655775a21a8994f3339}{%
-           family={Srebro},
-           familyi={S\bibinitperiod},
-           given={Nathan},
-           giveni={N\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{74b1355b2778d7ef09e52798d8dbe5c4}
-      \strng{fullhash}{fdc137a34eb21767ca23b01d062a8ab9}
-      \strng{fullhashraw}{fdc137a34eb21767ca23b01d062a8ab9}
-      \strng{bibnamehash}{74b1355b2778d7ef09e52798d8dbe5c4}
-      \strng{authorbibnamehash}{74b1355b2778d7ef09e52798d8dbe5c4}
-      \strng{authornamehash}{74b1355b2778d7ef09e52798d8dbe5c4}
-      \strng{authorfullhash}{fdc137a34eb21767ca23b01d062a8ab9}
-      \strng{authorfullhashraw}{fdc137a34eb21767ca23b01d062a8ab9}
-      \field{sortinit}{N}
-      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{arXiv preprint arXiv:1707.09564}
-      \field{title}{A pac-bayesian approach to spectrally-normalized margin bounds for neural networks}
-      \field{year}{2017}
-    \endentry
-    \entry{zhou2018non}{article}{}{}
+    \entry{zhou2018non}{article}{}
       \name{author}{5}{}{%
         {{un=0,uniquepart=base,hash=512884fa585f2ef0e137d5c14e49bb94}{%
            family={Zhou},
@@ -132,16 +85,14 @@
       }
       \strng{namehash}{c85a736ea1c9474bf3e0d67dcda71728}
       \strng{fullhash}{dbfdc77d42b62bbaba516efc6f31c78e}
-      \strng{fullhashraw}{dbfdc77d42b62bbaba516efc6f31c78e}
       \strng{bibnamehash}{c85a736ea1c9474bf3e0d67dcda71728}
       \strng{authorbibnamehash}{c85a736ea1c9474bf3e0d67dcda71728}
       \strng{authornamehash}{c85a736ea1c9474bf3e0d67dcda71728}
       \strng{authorfullhash}{dbfdc77d42b62bbaba516efc6f31c78e}
-      \strng{authorfullhashraw}{dbfdc77d42b62bbaba516efc6f31c78e}
       \field{sortinit}{Z}
       \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
       \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
+      \field{labeldatesource}{year}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{arXiv preprint arXiv:1804.05862}
