@@ -173,7 +173,11 @@ cross/.default={1pt}}
     \vspace{-18mm}
 
     \begin{exampleblock}{Introduction}
-    Gradient Descent, originally discussed by \cite{cauchy1847methode}, is the simplest strategy to minimize a differentiable function $f$ on $\mathbb{R}_n$. It is well-known that the convergence rate for this algorithm is $O(1/k)$. Here, we discuss the lower bounds on the convergence rates for $\beta$-smooth convex functions in $O(1/k^2)$, and emphasize how Nesterov's Accelerated Gradient Descent achieves this bound. The main source of reference for this poster is \cite[Chapter 3]{bubeck2015convex}.
+    Gradient Descent, originally discussed by \cite{cauchy1847methode}, is the simplest strategy to minimize a differentiable function 
+    $f$ on $\mathbb{R}_n$. It is well-known that the convergence rate for this algorithm is 
+    $O(1/t)$. Here, we discuss the lower bounds on the convergence rates for $\beta$-smooth convex functions in 
+    $O(1/t^2)$, and emphasize how Nesterov's Accelerated Gradient Descent achieves this bound. The main source of reference for this poster is from Chapter 3 of 
+    \cite{bubeck2015convex}. 
     
     % Recent works like \cite{dziugaite2017computing} and \cite{zhou2018non} have shown that one can obtain non-vacuous ``computational" PAC-Bayesian bounds on the risk of neural nets. In this work we improve on existing theoretical PAC-Bayesian risk bounds by using data-dependent priors sensitive to the geometrical properties of training and by considering carefully chosen clusters of multiple nets in tandem.
 
@@ -188,18 +192,16 @@ cross/.default={1pt}}
 
 
     \begin{exampleblock}{Notation}
-      \begin{itemize}
-      \item $\delta f(x)$ is the set of \textbf{subgradients} of the point $x \in \mathbb{R}^n$. Then the subgradient $g \in \delta f(x)$ satisfies $f(x) - f(y) \leq g^\top (x-y)$.
-      \item $e_1, \dots, e_n$ is the canonical basis of $\mathbb{R}^n$.
-      \item $x^* \in \mathbb{R}^n$ is a point such that it is the minima in any optimisation problem, i.e. $f(x^*) = \mathop{\min}\limits_{x \in \mathbb{R}^n} f(x)$. 
-      We always assume $x^*$ exists.
-      \item $\norm{\cdot}$ is always the Euclidean norm $\norm{x} = \sqrt{x_1^2 + x_2^2 + \dots + x_n^2}$ for $x \in \mathbb{R}^n$
-      \end{itemize}
+      $\delta f(x)$ is the set of \textbf{subgradients} of the point $x \in \mathbb{R}^n$. Then the subgradient $g \in \delta f(x)$ satisfies $f(x) - f(y) \leq g^\top (x-y)$. \\
+      $e_1, \dots, e_n$ is the canonical basis of $\mathbb{R}^n$. \\
+      $x^* \in \mathbb{R}^n$ is a point such that it is the minima in any optimisation problem, i.e. $f(x^*) = \mathop{\min}\limits_{x \in \mathbb{R}^n} f(x)$. 
+      We always assume $x^*$ exists. \\
+      $\norm{\cdot}$ is always the Euclidean norm $\norm{x} = \sqrt{x_1^2 + x_2^2 + \dots + x_n^2}$ for $x \in \mathbb{R}^n$
     \end{exampleblock}
    \begin{exampleblock}{Fastest theoretical speed for Gradient Descent}
    Theorem (\ref{thm:3.14}) states that, no matter the gradient method provided, there
    always exists a function $f$ such that when the gradient method is applied on
-   minimizing such $f$, the convergence rate is lower bounded as $O(1/k^2)$.
+   minimizing such $f$, the convergence rate is lower bounded as $O(1/t^2)$.
     \begin{theorem}[{\bf 1}] \label{thm:3.14}
       Let $t \leq \frac{n-1}{2}$ and $\beta > 0$. There exists a $\beta$-smooth convex function $f$ such that for any black-box procedure satisfying
       $x_{t+1} \in \text{Span}(g_1, \dots, g_t)$ with $g_s \in \delta f(x_s)$:
@@ -208,7 +210,7 @@ cross/.default={1pt}}
       \end{equation*}
     \end{theorem}
     \begin{center}
-      \textcolor{red}{This gives us a lower bound on the speed of gradient descent of $O(1/t^2)$. We observe that this bound is achieved by Nesterov's Accelerated Gradient Descent}
+      \textcolor{red}{We observe that Theorem~\ref{thm:3.19} attains this complexity bound of $O(1/t^2)$}
     \end{center}
     \end{exampleblock}
 
@@ -301,10 +303,10 @@ Then the following holds true:
     y_{t+1} &= x_t - \frac{1}{\beta}\nabla f(x_t) \label{nesterov:y}\\  % <-- label fixed
     x_{t+1} &= (1 - \gamma_t)y_{t+1} + \gamma_t y_t \label{nesterov:x}  % <-- label fixed, sign fixed
     \end{align}
-    Nesterov's accelerated gradient descent uses the ideas from classical momentum gradient descent (\cite{sutskever}). 
+    Nesterov's accelerated gradient descent uses the ideas from classical momentum gradient descent \parencite{sutskever}. 
     $x_{t+1}$ can be rewritten as $x_{t+1} = y_{t+1} - \gamma_t(y_{t+1} - y_{t})$ which reads as $x_{t+1}$ overshoots $y_{t+1}$ along the vector 
     $(y_{t+1} - y_{t})$ with some ``momentum'' given by $\gamma_t$ % <-- sign fixed (- instead of +)
-    \begin{theorem}[{\bf 3}]
+    \begin{theorem}[{\bf 3}]\label{thm:3.19}
     Let $f$ be a convex and $\beta$-smooth function, then Nesterov's accelerated gradient descent satisfies
     \newline \\
     \begin{equation*}
@@ -329,13 +331,14 @@ Then the following holds true:
     \begin{itemize}
       \item We can reverse engineer both $\lambda_t$ and $\gamma_t$ to show they are not arbitrary. If we rewrite (\ref{nesterov:x}) as $x_{t} = y_{t} + d_t$ 
       where $d_t = \gamma_t (y_{t} - y_{t-1})$ is the momentum term and 
-      let $g_{t} = -\frac{1}{\beta}\nabla f(y_{t} + d_t)$ be the gradient term in $y_{t+1}$ by rewriting $x_t$ as above (\ref{nesterov:y}), we get the following two 
+      let $g_{t} = -\frac{1}{\beta}\nabla f(y_{t} + d_t)$ be the gradient term in $y_{t+1}$ (\ref{nesterov:y}) by rewriting $x_t$ as above, we get the following two 
       inequalities when applying Lemma~\ref{lemma:3.6}:
       \begin{align*}
         f(y_{t+1}) - f(y_t) &\leq -\frac{\beta}{2}(\norm{g_t}^2 - 2g_t \cdot d_t)  \tag{$\star$} \label{ineq:1}\\
         f(y_{t+1}) - f(x^*) &\leq -\frac{\beta}{2}(\norm{g_t}^2 - 2g_t \cdot (x_t + d_t - x^*)) \tag{$\star\star$} \label{ineq:2} % <-- x_y -> x_t
       \end{align*}
-      \item The big idea is to use the identity $\norm{a}^2 + 2ab = \norm{a+b}^2 - \norm{b}^2$ on the combination of both inequalities to obtain a telescopic sum~\cite{BubeckUpdatePost}. 
+      \item The big idea is to use the identity $\norm{a}^2 + 2ab = \norm{a+b}^2 - \norm{b}^2$ on the combination of both inequalities to obtain a telescopic 
+      sum~\parencite{BubeckUpdatePost}. 
       Let $\delta_t = f(y_{t}) - f(x^*)$. Then by multiplying (\ref{ineq:1}) by $(\lambda_t - 1)$ and adding (\ref{ineq:2}) we obtain:
       \begin{align*}
       \lambda_t \delta_{t+1} - (\lambda_t - 1)\delta_t
