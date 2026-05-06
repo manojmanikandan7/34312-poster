@@ -178,18 +178,7 @@ cross/.default={1pt}}
     $O(1/t)$. Here, we discuss the lower bounds on the convergence rates for $\beta$-smooth convex functions in 
     $O(1/t^2)$, and emphasize how Nesterov's Accelerated Gradient Descent achieves this bound. The main source of reference for this poster is from Chapter 3 of 
     \cite{bubeck2015convex}. 
-    
-    % Recent works like \cite{dziugaite2017computing} and \cite{zhou2018non} have shown that one can obtain non-vacuous ``computational" PAC-Bayesian bounds on the risk of neural nets. In this work we improve on existing theoretical PAC-Bayesian risk bounds by using data-dependent priors sensitive to the geometrical properties of training and by considering carefully chosen clusters of multiple nets in tandem.
-
-    % These experiments strongly motivate the current work to search for stronger theoretical basis towards explaining the power of PAC-Bayesian risk bounds in explaining the generalization ability of neural nets. Previous PAC-Bayes bounds (and us too) have used data dependent priors on the geometric mean of the spectral norms of the layer matrices to try to track the first parameter above. In this work we also propose a mechanism of choosing the finite set priors in such a way that can also track the angular deflection in a data-dependent way.
-
-    % {\it Secondly,} we go further to show how in the PAC-Bayesian framework one can leverage more out of the angle parameter by simultaneously training a clusters of nets that is by obtaining in tandem a finite set of classifiers/neural functions on the chosen architecture by simultaneously training multiple instances initialized at different by closeby weight vectors. Because of this use of clusters, compared to previous bounds our dependency on the distance from initialization is also more intricate and we are able to get more sensitive to the average case behaviour. Thus we build into the theory more data-dependent (and hence tunable) parameters which help us further improve over existing bounds. And to incorporate the effect of the cluster we need to prove new noise resilience theorems for neural nets.
     \end{exampleblock}
-
-    % \begin{exampleblock}{TO DO}
-    % Hello!
-    % \end{exampleblock}
-
 
     \begin{exampleblock}{Notation}
       $\delta f(x)$ is the set of \textbf{subgradients} of the point $x \in \mathbb{R}^n$. Then the subgradient $g \in \delta f(x)$ satisfies $f(x) - f(y) \leq g^\top (x-y)$. \\
@@ -300,12 +289,12 @@ Then the following holds true:
     Nesterov's accelerated gradient descent is described as follows. Start at an arbitrary initial point $x_1=y_1$ and then iterate
     the following equations for $t\geq1$
     \begin{align}
-    y_{t+1} &= x_t - \frac{1}{\beta}\nabla f(x_t) \label{nesterov:y}\\  % <-- label fixed
-    x_{t+1} &= (1 - \gamma_t)y_{t+1} + \gamma_t y_t \label{nesterov:x}  % <-- label fixed, sign fixed
+    y_{t+1} &= x_t - \frac{1}{\beta}\nabla f(x_t) \label{nesterov:y}\\
+    x_{t+1} &= (1 - \gamma_t)y_{t+1} + \gamma_t y_t \label{nesterov:x}
     \end{align}
     Nesterov's accelerated gradient descent uses the ideas from classical momentum gradient descent \parencite{sutskever}. 
     $x_{t+1}$ can be rewritten as $x_{t+1} = y_{t+1} - \gamma_t(y_{t+1} - y_{t})$ which reads as $x_{t+1}$ overshoots $y_{t+1}$ along the vector 
-    $(y_{t+1} - y_{t})$ with some ``momentum'' given by $\gamma_t$ % <-- sign fixed (- instead of +)
+    $(y_{t+1} - y_{t})$ with some ``momentum'' given by $\gamma_t$
     \begin{theorem}[{\bf 3}]\label{thm:3.19}
     Let $f$ be a convex and $\beta$-smooth function, then Nesterov's accelerated gradient descent satisfies
     \newline \\
@@ -327,42 +316,89 @@ Then the following holds true:
     \begin{column}{.32\linewidth}
     \vspace{-18mm}
 
+    % ============================================================
+    % CORRECTED PANEL — Key insights from Proof of Theorem 3
+    % ============================================================
     \begin{exampleblock}{Key insights from Proof of Theorem $3$}
     \begin{itemize}
-      \item We can reverse engineer both $\lambda_t$ and $\gamma_t$ to show they are not arbitrary. If we rewrite (\ref{nesterov:x}) as $x_{t} = y_{t} + d_t$ 
-      where $d_t = \gamma_t (y_{t} - y_{t-1})$ is the momentum term and 
-      let $g_{t} = -\frac{1}{\beta}\nabla f(y_{t} + d_t)$ be the gradient term in $y_{t+1}$ (\ref{nesterov:y}) by rewriting $x_t$ as above, we get the following two 
-      inequalities when applying Lemma~\ref{lemma:3.6}:
+      %
+      % --- SETUP: define d_t and g_t ---
+      %
+      \item We can reverse engineer both $\lambda_t$ and $\gamma_t$ to
+      show they are not arbitrary.
+      Define $d_t := x_t - y_t$ (the momentum displacement) and
+      $g_t := -\tfrac{1}{\beta}\nabla f(x_t)$ (the gradient step),
+      so that $y_{t+1} = x_t + g_t$.
+      Applying Lemma~\ref{lemma:3.6} with $x = x_t$ and
+      $\nabla f(x_t) = -\beta g_t$ gives two inequalities:
       \begin{align*}
-        f(y_{t+1}) - f(y_t) &\leq -\frac{\beta}{2}(\norm{g_t}^2 - 2g_t \cdot d_t)  \tag{$\star$} \label{ineq:1}\\
-        f(y_{t+1}) - f(x^*) &\leq -\frac{\beta}{2}(\norm{g_t}^2 - 2g_t \cdot (x_t + d_t - x^*)) \tag{$\star\star$} \label{ineq:2} % <-- x_y -> x_t
+        f(y_{t+1}) - f(y_t)
+          &\leq -\frac{\beta}{2}\bigl(\norm{g_t}^2
+            + 2\,g_t \cdot d_t\bigr)
+          \tag{$\star$} \label{ineq:1} \\[4pt]
+        f(y_{t+1}) - f(x^*)
+          &\leq -\frac{\beta}{2}\bigl(\norm{g_t}^2
+            + 2\,g_t \cdot (x_t - x^*)\bigr)
+          \tag{$\star\!\star$} \label{ineq:2}
       \end{align*}
-      \item The big idea is to use the identity $\norm{a}^2 + 2ab = \norm{a+b}^2 - \norm{b}^2$ on the combination of both inequalities to obtain a telescopic 
-      sum~\parencite{BubeckUpdatePost}. 
-      Let $\delta_t = f(y_{t}) - f(x^*)$. Then by multiplying (\ref{ineq:1}) by $(\lambda_t - 1)$ and adding (\ref{ineq:2}) we obtain:
+      %
+      % --- COMBINE via identity ---
+      %
+      \item The big idea is to use the identity
+      $\norm{a}^2 + 2\,a \cdot b = \norm{a+b}^2 - \norm{b}^2$
+      on the combination of both inequalities to obtain a telescopic
+      sum~\parencite{BubeckUpdatePost}.
+      Let $\delta_t = f(y_t) - f(x^*)$.
+      Multiplying~(\ref{ineq:1}) by $(\lambda_t - 1)$ and
+      adding~(\ref{ineq:2}), and using
+      $(\lambda_t{-}1)\,d_t + x_t = y_t + \lambda_t d_t$, we obtain:
       \begin{align*}
-      \lambda_t \delta_{t+1} - (\lambda_t - 1)\delta_t
-        &\leq -\frac{\beta}{2} \bigl(\lambda_t \|g_t\|^2 + 2\, g_t \cdot(x_t + \lambda_t d_t - x^*)\bigr) \\
-        &= -\frac{\beta}{2}\frac{1}{\lambda_t} \bigl(\|x_t + \lambda_t d_t - x^* + \lambda_t g_t\|^2 \\
-        &\phantom{{}= -\frac{\beta}{2}\frac{1}{\lambda_t} \bigl(}
-          - \|\,x_t + \lambda_t d_t - x^*\|^2\bigr) \tag{$\dagger$} \label{eq:3}
-    \end{align*}
-      where the equality comes by applying the identity with $a = \lambda_t g_t$ and $b = x_t + \lambda_t d_t - x^*$.
-      \item To obtain the telescopic sum, we need
-      \begin{equation*}
-        x_t + \lambda_t d_t - x^* + \lambda_t g_t = x_{t+1} + \lambda_{t+1} d_{t+1} - x^*
-      \end{equation*}
-      which comes from observing (\ref{eq:1}). Since $d_{t+1} = x_{t+1} - y_{t+1} = -\gamma_t (d_t + g_t)$ and $x_{t+1} = x_t + g_t + d_t$: % <-- gamma_{t+1} -> -gamma_t
-      \begin{align*}
-        x_t + \lambda_t d_t - x^* + \lambda_t g_t &= x_t + g_t + d_t - \lambda_{t+1} \cdot \gamma_t (g_t + d_t) - x^* \\ % <-- sign and index fixed
-        \lambda_t (d_t + g_t) &= (d_t + g_t)(1 - \lambda_{t+1}\cdot\gamma_t) % <-- sign and index fixed
+        \lambda_t\,\delta_{t+1} - (\lambda_t {-} 1)\,\delta_t
+          &\leq -\frac{\beta}{2}\bigl(
+            \lambda_t\norm{g_t}^2
+            + 2\,g_t \cdot (y_t + \lambda_t d_t - x^*)\bigr)
       \end{align*}
-      and hence $\gamma_t = \frac{1 - \lambda_t}{\lambda_{t+1}}$ % <-- gamma_{t+1} -> gamma_t
-      \item Now to select $\lambda_t$, by multiplying $\lambda_t$ to (\ref{eq:1}) and denoting $u_t := \frac{\beta}{2}\norm{x_t + \lambda_t d_t - x^*}$ we get
+      Multiplying both sides by $\lambda_t$ and applying the identity
+      with $a = \lambda_t g_t$, \ $b = y_t + \lambda_t d_t - x^*$:
+      \begin{align*}
+        \lambda_t^2\,\delta_{t+1} - (\lambda_t^2 {-} \lambda_t)\,\delta_t
+          &\leq -\frac{\beta}{2}\bigl(
+            \norm{y_t + \lambda_t d_t + \lambda_t g_t - x^*}^2 \\[-2pt]
+          &\phantom{{}\leq -\frac{\beta}{2}\bigl(}
+            -\;\norm{y_t + \lambda_t d_t - x^*}^2\bigr)
+          \tag{$\dagger$} \label{eq:dagger}
+      \end{align*}
+      %
+      % --- TELESCOPING: derive gamma_t ---
+      %
+      \item To obtain the telescopic sum, denote
+      $v_t := \tfrac{\beta}{2}\norm{y_t + \lambda_t d_t - x^*}^2$.
+      We need:
       \begin{equation*}
-        \lambda_t^2 \delta_{t+1} - (\lambda_t^2 - \lambda_t)\delta_t \leq u_t - u_{t+1}
+        y_t + \lambda_t(d_t + g_t)
+          \;=\; y_{t+1} + \lambda_{t+1}\,d_{t+1}
       \end{equation*}
-      and therefore $\lambda_t^2 - \lambda_t = \lambda_{t-1}^2$ is required to obtain the full telescopic sum. The rest of the proof follows by induction.
+      Since $y_{t+1} = y_t + d_t + g_t$ and
+      $d_{t+1} = x_{t+1} - y_{t+1} = -\gamma_t(d_t + g_t)$:
+      \begin{align*}
+        \lambda_t(d_t + g_t)
+          &= (d_t + g_t) + \lambda_{t+1}\bigl[-\gamma_t(d_t + g_t)\bigr] \\
+        \lambda_t(d_t + g_t)
+          &= (d_t + g_t)(1 - \lambda_{t+1}\,\gamma_t)
+      \end{align*}
+      and hence
+      $\;\gamma_t = \dfrac{1 - \lambda_t}{\lambda_{t+1}}$.
+      %
+      % --- SELECTING lambda_t ---
+      %
+      \item With~(\ref{eq:dagger}) now telescoping as
+      $\lambda_t^2\,\delta_{t+1} - (\lambda_t^2 {-} \lambda_t)\,\delta_t
+      \leq v_t - v_{t+1}$, we require
+      $\lambda_t^2 - \lambda_t = \lambda_{t-1}^2$ for the left side
+      to collapse. Summing from $t=1$ to $T{-}1$ and using
+      $v_1 = \tfrac{\beta}{2}\norm{x_1 - x^*}^2$
+      (since $d_1 = 0$) and $\lambda_{T-1} \geq T/2$
+      completes the proof.
     \end{itemize}
     \end{exampleblock}
 
@@ -380,12 +416,4 @@ Then the following holds true:
 \end{columns}
 \end{frame}
 
-\end{document} 
-
-
-
-
-
-
-% \nocite{*}
-% \tiny {}
+\end{document}
