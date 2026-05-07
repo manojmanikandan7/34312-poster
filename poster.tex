@@ -1,5 +1,5 @@
 \documentclass[final,t]{beamer}
-\setbeamersize{text margin left = 25pt, text margin right = -5pt}
+\setbeamersize{text margin left = 15pt, text margin right = 15pt}
 
 \usepackage{graphicx}
 
@@ -170,20 +170,20 @@ cross/.default={1pt}}
 % ------------------------------------------------------------
 
 \begin{column}{.32\linewidth}
-    \vspace{-18mm}
+    \vspace{-10mm}
 
     \begin{exampleblock}{Introduction}
-    Gradient Descent, originally discussed by \cite{cauchy1847methode}, is the simplest strategy to minimize a differentiable function 
-    $f$ on $\mathbb{R}_n$. It is well-known that the convergence rate for this algorithm is 
-    $O(1/t)$. Here, we discuss the lower bounds on the convergence rates for $\beta$-smooth convex functions in 
-    $O(1/t^2)$, and emphasize how Nesterov's Accelerated Gradient Descent achieves this bound. The main source of reference for this poster is from Chapter 3 of 
-    \cite{bubeck2015convex}. 
+    Gradient Descent, originally discussed by \cite{cauchy1847methode}, is the simplest strategy to minimize a differentiable function
+    $f$ on $\mathbb{R}_n$. It is well-known that the convergence rate for this algorithm is
+    $O(1/t)$. Here, we discuss the lower bounds on the convergence rates for $\beta$-smooth convex functions in
+    $O(1/t^2)$, and emphasize how Nesterov's Accelerated Gradient Descent achieves this bound. The main source of reference for this poster is from Chapter 3 of
+    \cite{bubeck2015convex}.
     \end{exampleblock}
 
     \begin{exampleblock}{Notation}
       $\delta f(x)$ is the set of \textbf{subgradients} of the point $x \in \mathbb{R}^n$. Then the subgradient $g \in \delta f(x)$ satisfies $f(x) - f(y) \leq g^\top (x-y)$. \\
       $e_1, \dots, e_n$ is the canonical basis of $\mathbb{R}^n$. \\
-      $x^* \in \mathbb{R}^n$ is a point such that it is the minima in any optimisation problem, i.e. $f(x^*) = \mathop{\min}\limits_{x \in \mathbb{R}^n} f(x)$. 
+      $x^* \in \mathbb{R}^n$ is a point such that it is the minima in any optimisation problem, i.e. $f(x^*) = \mathop{\min}\limits_{x \in \mathbb{R}^n} f(x)$.
       We always assume $x^*$ exists. \\
       $\norm{\cdot}$ is always the Euclidean norm $\norm{x} = \sqrt{x_1^2 + x_2^2 + \dots + x_n^2}$ for $x \in \mathbb{R}^n$
     \end{exampleblock}
@@ -205,6 +205,7 @@ cross/.default={1pt}}
 
     \begin{exampleblock}{Crafting a $\beta$-smooth function $f$}
       To construct a suitable function $f$ that satisfies (subsequently, proves) Theorem (\ref{thm:3.14}), \cite{bubeck2015convex} constructs a symmetric and tridiagonal matrix
+      \vspace{-2mm}
       \begin{equation*}
         (A_k)_{i,j} = \begin{cases}
           2, \ &i=j \ , \ i \leq k \\
@@ -212,24 +213,29 @@ cross/.default={1pt}}
           0, &\text{ otherwise}
         \end{cases}
       \end{equation*}
+      \vspace{-2mm}
       and defines $f$ as:
+      \vspace{-2mm}
       \begin{equation*}
         f_s(x) = \frac{\beta}{8}x^\top A_s x - \frac{\beta}{4}x^\top e_1
       \end{equation*}
+      \vspace{-2mm}
       For $s \le t$, we have $x_s(i) = 0$ for $i = s,\ldots, n; n=2t+1$, which implies $x_s^\top A_{n} x_s \ge x_s^\top A_s x_s$. This implies,
+      \vspace{-2mm}
       \begin{equation}\label{eq:1}
         f(x_s) - f^* = f(x_s) - f^*_{n} \geq f^*_s - f^*_{2t + 1} \geq f^*_t - f^*_{2t + 1}
       \end{equation}
-
+      \vspace{-1mm}
       $x^*$ is the unique solution in the span of $e_1, \ldots , e_k$ of
       $A_k x = e_1$. It is easy to verify that it is defined by $x^*_k(i) = 1 - \frac{i}{k+1}$ for $i = 1, \ldots , k$. Thus,
+      \vspace{-2mm}
       \begin{equation}\label{eq:2}
         f^*_k = \frac{\beta}{8}(x^*_k)^\top A_k x^*_k - \frac{\beta}{4}(x^*_k)^\top e_1 = - \frac{\beta}{8}(x^*_k)^\top e_1 = -\frac{\beta}{8} \left(1 - \frac{1}{k+1}\right)
       \end{equation}
-      From definition of $x^*_k$ for $k=n$, and $x_1=0$, we can derive lower bounds for $n \ge \frac{3}{2}||x_1 - x^*_n||_2^2$. 
-      
+      \vspace{-1mm}
+      From definition of $x^*_k$ for $k=n$, and $x_1=0$, we can derive lower bounds for $n \ge \frac{3}{2}||x_1 - x^*_n||_2^2$.
       This bound, along with substitution of Equation \ref{eq:2} in Equation \ref{eq:1} resolves to Theorem (\ref{thm:3.14}).
-            
+
     \end{exampleblock}
 
 \end{column}
@@ -241,7 +247,7 @@ cross/.default={1pt}}
 
 
 \begin{column}{.32\linewidth}
-\vspace{-18mm}
+\vspace{-10mm}
 
 
 
@@ -292,8 +298,8 @@ Then the following holds true:
     y_{t+1} &= x_t - \frac{1}{\beta}\nabla f(x_t) \label{nesterov:y}\\
     x_{t+1} &= (1 - \gamma_t)y_{t+1} + \gamma_t y_t \label{nesterov:x}
     \end{align}
-    Nesterov's accelerated gradient descent uses the ideas from classical momentum gradient descent \parencite{sutskever}. 
-    $x_{t+1}$ can be rewritten as $x_{t+1} = y_{t+1} - \gamma_t(y_{t+1} - y_{t})$ which reads as $x_{t+1}$ overshoots $y_{t+1}$ along the vector 
+    Nesterov's accelerated gradient descent uses the ideas from classical momentum gradient descent \parencite{sutskever}.
+    $x_{t+1}$ can be rewritten as $x_{t+1} = y_{t+1} - \gamma_t(y_{t+1} - y_{t})$ which reads as $x_{t+1}$ overshoots $y_{t+1}$ along the vector
     $(y_{t+1} - y_{t})$ with some ``momentum'' given by $\gamma_t$.
     \begin{theorem}[{\bf 3}]\label{thm:3.19}
     Let $f$ be a convex and $\beta$-smooth function, then Nesterov's accelerated gradient descent satisfies
@@ -304,7 +310,7 @@ Then the following holds true:
     \end{theorem}
 
     This gives us the $O(1/t^2)$ complexity. \\
-    \textit{Achieving this accelerated rate relies on carefully choosing the parameters 
+    \textit{Achieving this accelerated rate relies on carefully choosing the parameters
     $\lambda_t$ and $\gamma_t$ so that the convergence inequalities telescope across iterations.}
     \end{exampleblock}
 
@@ -316,7 +322,7 @@ Then the following holds true:
     %------------------------------------------
 
     \begin{column}{.32\linewidth}
-    \vspace{-18mm}
+    \vspace{-10mm}
 
     % ============================================================
     % CORRECTED PANEL — Key insights from Proof of Theorem 3
@@ -405,12 +411,13 @@ Then the following holds true:
 
 
     \begin{exampleblock}{References}
-    %\small 
-        \vspace{1mm} 
-    \printbibliography
-    \vspace{1mm} 
+    %\small
+        \vspace{1mm}
+    \printbibliography[heading=none]
+    \vspace{1mm}
     \end{exampleblock}
 
+    \vspace{10mm}
 
 \end{column}
 
