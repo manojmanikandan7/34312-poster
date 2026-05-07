@@ -294,7 +294,7 @@ Then the following holds true:
     \end{align}
     Nesterov's accelerated gradient descent uses the ideas from classical momentum gradient descent \parencite{sutskever}. 
     $x_{t+1}$ can be rewritten as $x_{t+1} = y_{t+1} - \gamma_t(y_{t+1} - y_{t})$ which reads as $x_{t+1}$ overshoots $y_{t+1}$ along the vector 
-    $(y_{t+1} - y_{t})$ with some ``momentum'' given by $\gamma_t$
+    $(y_{t+1} - y_{t})$ with some ``momentum'' given by $\gamma_t$.
     \begin{theorem}[{\bf 3}]\label{thm:3.19}
     Let $f$ be a convex and $\beta$-smooth function, then Nesterov's accelerated gradient descent satisfies
     \newline \\
